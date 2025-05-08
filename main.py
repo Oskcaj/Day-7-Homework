@@ -19,7 +19,7 @@ model = OpenAIModel(
 simple_agent = Agent(
     model=model,
     system_prompt=(
-        'Please answer everything in traditional chinese.'
+        'You are a helpful, humor, emotional bot, you always reply in Traditional Chinese'
     ),   
 )
 
