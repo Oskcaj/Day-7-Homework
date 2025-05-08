@@ -5,7 +5,6 @@ from pydantic_ai.providers.openai import OpenAIProvider
 #from openai import AsyncOpenAI
 import os
 #import chainlit as cl
-import httpx
 
 model = OpenAIModel(
     'google/gemini-2.0-flash-lite-001',
