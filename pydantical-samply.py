@@ -1,6 +1,8 @@
 from pydantic_ai import Agent
 from pydantic_ai.models.openai import OpenAIModel
 from pydantic_ai.providers.openai import OpenAIProvider
+import httpx
+import os
 
 model = OpenAIModel(
     'google/gemini-2.0-flash-lite-001',
