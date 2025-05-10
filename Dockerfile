@@ -10,4 +10,4 @@ RUN pip install --no-cache-dir -r requirements.txt
 
 EXPOSE 8080
 
-ENTRYPOINT ["chainlit", "run", "--host=0.0.0.0", "--port=8080", "main.py"]
+ENTRYPOINT ["chainlit", "run", "-h", "--host=0.0.0.0", "--port=8080", "main.py"]

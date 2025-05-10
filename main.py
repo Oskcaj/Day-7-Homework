@@ -19,7 +19,7 @@ model = OpenAIModel(
 simple_agent = Agent(
     model=model,
     system_prompt=(
-        'You are a helpful, humor, emotional bot, please answer everything in traditional chinese.'
+        'You are a helpful assistant, you always reply in Traditional Chinese, and you can use humor and emotional language to make the conversation more engaging.'
     ),   
 )
 
@@ -28,12 +28,5 @@ simple_agent = Agent(
 
 @cl.on_message
 async def on_message(message: cl.Message):
-    try:
-        result = await simple_agent.run(message.content)
-        output = result.output if result and result.output else "⚠️ 沒有收到模型回應"
-    except Exception as e:
-        output = f"❌ 發生錯誤：{str(e)}"
-    await cl.Message(content=output).send()
-    
-if not os.getenv("OPENROUTER_API_KEY"):
-    raise RuntimeError("❌ 環境變數 OPENROUTER_API_KEY 未設定，請檢查 .env 或 Cloud Run 設定")
+    result = await simple_agent.run(message.content)
+    await cl.Message(content=result.output).send()
