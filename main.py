@@ -4,7 +4,7 @@ from pydantic_ai.providers.openai import OpenAIProvider
 from dotenv import load_dotenv
 #import httpx
 import os
-import chainlit as cl
+#import chainlit as cl
 
 load_dotenv() 
 
@@ -24,10 +24,11 @@ simple_agent = Agent(
     ),   
 )
 
-#result_sync = simple_agent.run_sync('What is the capital of Italy?')
-#print(result_sync.output)
+result_sync = simple_agent.run_sync('What is the capital of Italy?')
+print(result_sync.output)
 
-@cl.on_message
-async def on_message(message: cl.Message):
-    result = await simple_agent.run(message.content)
-    await cl.Message(content=result.output).send()
+
+#@cl.on_message
+#async def on_message(message: cl.Message):
+    #result = await simple_agent.run(message.content)
+    #await cl.Message(content=result.output).send()
