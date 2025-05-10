@@ -3,7 +3,6 @@ from pydantic_ai.models.openai import OpenAIModel
 from pydantic_ai.providers.openai import OpenAIProvider
 #import httpx
 import os
-import chainlit as simple_agent
 
 model = OpenAIModel(
     'google/gemini-2.0-flash-lite-001',
@@ -23,3 +22,6 @@ simple_agent = Agent(
         'You are a helpful, humor, emotional bot, please answer everything in traditional chinese.'
     ),   
 )
+
+result_sync = simple_agent.run_sync('What is the capital of Italy?')
+print(result_sync.output)
