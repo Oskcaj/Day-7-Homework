@@ -3,21 +3,20 @@ from pydantic_ai.models.openai import OpenAIModel
 from pydantic_ai.providers.openai import OpenAIProvider
 #import httpx
 import os
+import chainlit as cl
 
 model = OpenAIModel(
     'google/gemini-2.0-flash-lite-001',
     provider=OpenAIProvider(
         base_url='https://openrouter.ai/api/v1',
-        api_key=os.getenv("OPENROUTER_API_KEY"),
-    
+        #api_key=os.getenv("OPENROUTER_API_KEY"),
+        api_key='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',
         #http_client=httpx.AsyncClient(verify=False)
     ),
 )
 
 simple_agent = Agent(
     model=model,
-    # 'Be concise, reply with one sentence.' is enough for some models (like openai) to use
-    # the below tools appropriately, but others like anthropic and gemini require a bit more direction.
     system_prompt=(
         'You are a helpful, humor, emotional bot, please answer everything in traditional chinese.'
     ),   
@@ -25,3 +24,8 @@ simple_agent = Agent(
 
 result_sync = simple_agent.run_sync('What is the capital of Italy?')
 print(result_sync.output)
+
+@cl.on_message
+async def on_message(message: cl.Message):
+    result = await simple_agent.run(message.content)
+    await cl.Message(content=result.output).send()
