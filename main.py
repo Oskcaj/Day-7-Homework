@@ -1,9 +1,12 @@
 from pydantic_ai import Agent
 from pydantic_ai.models.openai import OpenAIModel
 from pydantic_ai.providers.openai import OpenAIProvider
+from dotenv import load_dotenv
 #import httpx
 import os
 import chainlit as cl
+
+load_dotenv() 
 
 model = OpenAIModel(
     'google/gemini-2.0-flash-lite-001',
@@ -21,8 +24,8 @@ simple_agent = Agent(
     ),   
 )
 
-result_sync = simple_agent.run_sync('What is the capital of Italy?')
-print(result_sync.output)
+#result_sync = simple_agent.run_sync('What is the capital of Italy?')
+#print(result_sync.output)
 
 @cl.on_message
 async def on_message(message: cl.Message):
