@@ -1,37 +1,27 @@
-from openai import AsyncOpenAI
-import os
-import chainlit as cl
+from pydantic_ai import Agent
+from pydantic_ai.models.openai import OpenAIModel
+from pydantic_ai.providers.openai import OpenAIProvider
 import httpx
+import os
 
-# client = AsyncOpenAI()
-client = AsyncOpenAI(
-    base_url="https://openrouter.ai/api/v1",
-    api_key=os.getenv("OPENROUTER_API_KEY"),
-    http_client = httpx.AsyncClient(verify=False)
+model = OpenAIModel(
+    'google/gemini-2.0-flash-lite-001',
+    provider=OpenAIProvider(
+        base_url='https://openrouter.ai/api/v1',
+        api_key=os.getenv("OPENROUTER_API_KEY"),
+    
+        #http_client=httpx.AsyncClient(verify=False)
+    ),
 )
 
-# Instrument the OpenAI client
-cl.instrument_openai()
+simple_agent = Agent(
+    model=model,
+    # 'Be concise, reply with one sentence.' is enough for some models (like openai) to use
+    # the below tools appropriately, but others like anthropic and gemini require a bit more direction.
+    system_prompt=(
+        'You are a helpful, humor, emotional bot, please answer everything in traditional chinese.'
+    ),   
+)
 
-settings = {
-    "model": "google/gemini-2.0-flash-lite-001",
-    "temperature": 0,
-    # ... more settings
-}
-
-@cl.on_message
-async def on_message(message: cl.Message):
-    response = await client.chat.completions.create(
-        messages=[
-            {
-                "content": "You are a helpful bot, you always reply in Traditional Chinese",
-                "role": "system"
-            },
-            {
-                "content": message.content,
-                "role": "user"
-            }
-        ],
-        **settings
-    )
-    await cl.Message(content=response.choices[0].message.content).send()
+result_sync = simple_agent.run_sync('What is the capital of Italy?')
+print(result_sync.output)
