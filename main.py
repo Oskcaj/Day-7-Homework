@@ -9,9 +9,8 @@ model = OpenAIModel(
     'google/gemini-2.0-flash-lite-001',
     provider=OpenAIProvider(
         base_url='https://openrouter.ai/api/v1',
-        #api_key=os.getenv("OPENROUTER_API_KEY"),
-        api_key='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',
-        #http_client=httpx.AsyncClient(verify=False)
+        api_key=os.getenv("OPENROUTER_API_KEY"),
+       #http_client=httpx.AsyncClient(verify=False)
     ),
 )
 
