@@ -25,8 +25,12 @@ weather_agent = Agent(
     model=model,
     system_prompt=(
         "Be concise, reply with one sentence. "
-        "Use the `get_lat_lng` tool to get the latitude and longitude of the locations, "
-        "then use the `get_weather` tool to get the weather."
+        "You are a weather assistant and must answer questions using the following two tools:\n"
+        "1. `get_lat_lng`: used to query the longitude and latitude of the location entered by the user\n"
+        "2. `get_weather`: used to query the real-time weather at the specified longitude and latitude\n"
+        "When receiving a query, please use these two tools to process it, and do not guess or respond directly to the result.\n"
+        "Only one sentence is allowed to reply to the user after the tool provides the result.\n"
+        "Please think and act in English, and keep both input and output in English."
     ),
     deps_type=Deps,
     retries=2,
