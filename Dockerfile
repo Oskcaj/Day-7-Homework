@@ -11,4 +11,4 @@ RUN pip install --upgrade pip && pip install chainlit pydantic_ai httpx python-d
 
 EXPOSE 8080
 
-ENTRYPOINT ["chainlit", "run", "--host","main.py", "0.0.0.0", "--port", "8080"]
+CMD ["chainlit", "run", "main.py", "--host", "0.0.0.0", "--port", "8080"]
