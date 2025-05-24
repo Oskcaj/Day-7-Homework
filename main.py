@@ -68,3 +68,27 @@ async def on_message(message: cl.Message):
     else:
         result = await chat_agent.run(user_input)
         await cl.Message(content=result.output).send()
+        
+    if "weather" in task_type:
+        print("🔁 進入天氣判斷流程")
+        translated_input = await translate(user_input, "zh2en", translate_agent)
+        print("🌐 翻譯為英文：", translated_input)
+
+        async with AsyncClient(verify=False) as client:
+            deps = Deps(
+                client=client,
+                weather_api_key=os.getenv("WEATHER_API_KEY"),
+                geo_api_key=os.getenv("GEO_API_KEY")
+            )
+            print("🧠 呼叫 weather agent...")
+            try:
+                result = await weather_agent.run(translated_input, deps=deps)
+                print("✅ 天氣結果：", result.output)
+            except Exception as e:
+                print("❌ weather_agent 發生錯誤：", e)
+                await cl.Message(content="抱歉，查詢天氣時發生錯誤。").send()
+                return
+
+        translated_output = await translate(result.output, "en2zh", translate_agent)
+        print("🌏 翻譯為中文：", translated_output)
+        await cl.Message(content=translated_output).send()
