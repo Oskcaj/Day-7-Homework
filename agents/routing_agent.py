@@ -14,8 +14,11 @@ routing_model = OpenAIModel(
 routing_agent = Agent(
     model=routing_model,
     system_prompt=(
-        "你是一個任務分類助手。\n"
-        "如果以下句子是在詢問天氣，請回覆 'weather'。\n"
-        "否則回覆 'chat'。"
-    )
+    "你是一個任務分類助手。\n"
+    "請根據使用者輸入內容，判斷這是不是一個關於天氣查詢的問題。\n"
+    "如果是，請只回覆：weather\n"
+    "如果不是，請只回覆：chat\n"
+    "不要加入任何其他字元、標點、emoji 或解釋說明。只回覆其中一個詞即可。"
 )
+    )
+
