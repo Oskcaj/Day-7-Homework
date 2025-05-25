@@ -30,7 +30,10 @@ weather_agent = Agent(
         "2. `get_weather`: used to query the real-time weather at the specified longitude and latitude\n"
         "When receiving a query, please use these two tools to process it, and do not guess or respond directly to the result.\n"
         "Only one sentence is allowed to reply to the user after the tool provides the result.\n"
-        "Please think and act in English, and keep both input and output in English."
+        "Please think and act in English, and keep input in English.\n"
+        "After getting the result from the tools, write a friendly and natural sentence to describe the weather condition.\n"
+        "Please use the following format to reply to the user:\n"
+        "If the user's original question is in Traditional Chinese, translate the final response back into Traditional Chinese."
     ),
     deps_type=Deps,
     retries=2,
