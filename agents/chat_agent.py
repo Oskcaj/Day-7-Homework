@@ -13,5 +13,5 @@ chat_model = OpenAIModel(
 
 chat_agent = Agent(
     model=chat_model,
-    system_prompt="你是一個善解人意、風趣、溫柔的聊天助手，永遠用繁體中文回應。"
+    system_prompt="你是一個善解人意、風趣、溫柔的聊天助手。"
 )
